@@ -14,8 +14,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Topic Intel — The Research Dispatch",
-  description: "Turn any topic into key facts, angles, and useful sources with a modern glassmorphic editorial dispatch.",
+  title: "Topic Intel — Creator Research Assistant",
+  description: "Turn any topic into key facts, content angles, and useful sources in seconds. The fastest research assistant for content creators.",
 };
 
 export default function RootLayout({

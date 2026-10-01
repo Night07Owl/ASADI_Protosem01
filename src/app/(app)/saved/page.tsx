@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { Bookmark, ArrowRight, Trash2, FolderOpen, Globe, Sparkles } from 'lucide-react';
+import { Bookmark, ArrowRight, Trash2, FolderOpen, Search, Sparkles } from 'lucide-react';
 import { useToast } from '@/context/ToastContext';
 
 interface SavedResearchItem {
@@ -59,35 +59,35 @@ export default function SavedPage() {
       const filtered = stored.filter((s: any, idx: number) => (s.id || `saved_${idx}`) !== id);
       localStorage.setItem('saved_research', JSON.stringify(filtered));
     }
-    showToast("Research dossier removed");
+    showToast("Removed from saved library");
   };
 
   return (
-    <div className="animate-fade-in-up max-w-4xl mx-auto px-2 sm:px-4 py-6">
-      <header className="mb-6 pb-4 border-b border-[#E8E2D5]">
-        <div className="text-[10px] font-bold tracking-widest uppercase text-stone-400 mb-1">
-          THE ARCHIVE ROOM • PRIVATE DOSSIERS
+    <div className="animate-fade-in-up max-w-4xl mx-auto px-2 sm:px-4 py-4">
+      <header className="mb-6 pb-4 border-b border-slate-200/80">
+        <div className="flex items-center gap-2 mb-1">
+          <Bookmark className="w-5 h-5 text-rose-500" />
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+            Saved Research
+          </h1>
         </div>
-        <h1 className="font-headline text-3xl sm:text-4xl font-black text-stone-900 tracking-tight mb-1">
-          Saved Research Dossiers
-        </h1>
-        <p className="font-editorial-body italic text-stone-600 text-sm sm:text-base">
-          Your curated library of investigative dispatches, empirical facts, and accredited sources.
+        <p className="text-xs sm:text-sm text-slate-500">
+          Your saved library of topics, verified facts, viral angles, and source citations.
         </p>
       </header>
 
       {savedItems.length === 0 ? (
-        <div className="glass-card p-12 text-center rounded-3xl border border-white/95">
-          <FolderOpen className="w-12 h-12 text-stone-300 mx-auto mb-3" />
-          <h3 className="font-headline font-bold text-lg text-stone-900 mb-1">Archive is Empty</h3>
-          <p className="text-xs text-stone-500 mb-4 font-sans max-w-md mx-auto">
-            Inquire about any topic in the research dispatch and save dossiers to your reading desk.
+        <div className="creator-card p-12 text-center">
+          <FolderOpen className="w-12 h-12 text-slate-300 mx-auto mb-3" />
+          <h3 className="font-bold text-lg text-slate-900 mb-1">No Saved Research Yet</h3>
+          <p className="text-xs text-slate-500 mb-4 max-w-md mx-auto">
+            Search any topic in the research studio and click "Save" to build your personal creator library.
           </p>
           <Link
             href="/research"
-            className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-xl bg-gradient-to-r from-[#e6683c] via-[#dc2743] to-[#bc1888] text-white text-xs font-bold shadow-sm"
+            className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-xl creator-gradient-bg text-white text-xs font-bold shadow-sm hover:opacity-95 transition-all"
           >
-            <span>Open Research Gazette</span>
+            <span>Start Researching</span>
             <ArrowRight className="w-3.5 h-3.5" />
           </Link>
         </div>
@@ -97,28 +97,28 @@ export default function SavedPage() {
             <div
               key={item.id}
               onClick={() => router.push(`/research?topic=${encodeURIComponent(item.topic)}`)}
-              className="glass-card glass-card-hover p-6 rounded-3xl border border-white/95 transition-all cursor-pointer flex flex-col justify-between group"
+              className="creator-card p-5 cursor-pointer flex flex-col justify-between group"
             >
               <div>
                 <div className="flex items-center justify-between gap-2 mb-2">
-                  <span className="text-[10px] font-bold uppercase tracking-wider text-stone-600 bg-white/80 border border-stone-200 px-2.5 py-0.5 rounded-full">
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-slate-500 bg-slate-100 px-2 py-0.5 rounded-md">
                     {item.date}
                   </span>
                   <button
                     onClick={(e) => handleDelete(item.id, e)}
-                    className="p-1.5 rounded-lg text-stone-400 hover:text-rose-500 hover:bg-rose-50 transition-colors"
-                    title="Remove dossier"
+                    className="p-1.5 rounded-lg text-slate-400 hover:text-rose-500 hover:bg-rose-50 transition-colors"
+                    title="Remove item"
                   >
                     <Trash2 className="w-3.5 h-3.5" />
                   </button>
                 </div>
 
-                <h3 className="font-headline font-bold text-xl text-stone-900 mb-2 leading-snug group-hover:text-[#dc2743] transition-colors">
+                <h3 className="font-bold text-base sm:text-lg text-slate-900 mb-1 leading-snug group-hover:text-rose-600 transition-colors">
                   {item.topic}
                 </h3>
               </div>
 
-              <div className="pt-4 border-t border-stone-200/60 mt-4 flex items-center justify-between text-xs text-stone-500 font-sans">
+              <div className="pt-3 border-t border-slate-100 mt-3 flex items-center justify-between text-xs text-slate-500">
                 <div className="flex items-center gap-2">
                   <span>{item.factsCount} Facts</span>
                   <span>•</span>
@@ -126,8 +126,8 @@ export default function SavedPage() {
                   <span>•</span>
                   <span>{item.sourcesCount} Sources</span>
                 </div>
-                <span className="font-bold text-[#dc2743] group-hover:translate-x-1 transition-transform inline-flex items-center gap-1">
-                  Read <ArrowRight className="w-3.5 h-3.5" />
+                <span className="font-bold text-rose-600 group-hover:translate-x-1 transition-transform inline-flex items-center gap-1">
+                  Open <ArrowRight className="w-3.5 h-3.5" />
                 </span>
               </div>
             </div>
